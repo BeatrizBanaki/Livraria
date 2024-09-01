@@ -9,12 +9,14 @@ const usuariosRoutes = require('./routes/usuarios')
 const livrosRoutes = require('./routes/livros')
 const editorasRoutes = require('./routes/editoras')
 const generosRoutes = require('./routes/generos')
+const promocoesRoutes = require('./routes/promocoes')
 
 app.use('/install', install)
 app.use('/api', usuariosRoutes);
 app.use('/api', livrosRoutes)
 app.use('/api', editorasRoutes)
 app.use('/api', generosRoutes)
+app.use('/api', promocoesRoutes)
 
 app.listen(3000, () => {
   console.log('Servidor rodando na porta 3000')
