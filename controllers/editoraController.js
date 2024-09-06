@@ -20,7 +20,7 @@ exports.getEditora = async (req, res) => {
 exports.getEditoras = async (req, res) => {
   try {
     const { limite, pagina } = req.body;
-    if (limites.includes(limite) || pagina) {
+    if (limites.includes(limite) && pagina) {
       const offset = (pagina - 1) * limite;
       const editoras = await EditoraDao.list(limite, offset);
       res.status(200).json(editoras);

@@ -20,7 +20,7 @@ exports.getGenero = async (req, res) => {
 exports.getGeneros = async (req, res) => {
   try {
     const { limite, pagina } = req.body;
-    if (limites.includes(limite) || pagina) {
+    if (limites.includes(limite) && pagina) {
       const offset = (pagina - 1) * limite;
       const generos = await GeneroDao.list(limite, offset);
       res.status(200).json(generos);
