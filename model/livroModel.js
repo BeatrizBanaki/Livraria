@@ -94,5 +94,16 @@ module.exports = {
     return livros
   },
 
+  getLivrosByEditora: async function(id) {
+    const livros = await Livro.findAll(
+      {
+      where: 
+      {
+        editora: id,
+      },
+    });
+    return livros;
+  },
+
   Model: Livro
 };

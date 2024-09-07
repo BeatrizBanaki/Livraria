@@ -1,4 +1,6 @@
 const EditoraDao = require('../model/editoraModel');
+const LivroDao = require('../model/livroModel');
+
 
 const limites = [5, 10, 30];
 
@@ -20,7 +22,7 @@ exports.getEditora = async (req, res) => {
 exports.getEditoras = async (req, res) => {
   try {
     const { limite, pagina } = req.body;
-    if (limites.includes(limite) && pagina) {
+    if (limites.includes(limite) || pagina) {
       const offset = (pagina - 1) * limite;
       const editoras = await EditoraDao.list(limite, offset);
       res.status(200).json(editoras);
@@ -68,6 +70,23 @@ exports.excluirEditora = async (req, res) => {
     }
     res.status(200).json(editora);
   } catch (err) {
+    const erros = err.errors.map(erro => erro.message);
+    res.status(500).json({ erro: erros });
+  }
+};
+
+exports.valorLivros = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const livros = await LivroDao.getLivrosByEditora(id);
+    const valores = livros.map(livro => livro.preco);
+    let total = 0;
+    for (var i in valores) {
+      total += valores[i];
+    }
+    res.status(200).json({total});
+  } catch (err) {
+    console.log(err);
     const erros = err.errors.map(erro => erro.message);
     res.status(500).json({ erro: erros });
   }
